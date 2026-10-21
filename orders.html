@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Santra | My Orders</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="promo">Free doorstep pickup on donations of 3 garments or more - <a href="donate.html">book a collection</a></div>
+    <header>
+        <a href="index.html" class="logo">Santra</a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="catalogue.html">Catalogue</a>
+            <a href="donate.html">Donate Clothes</a>
+            <a href="sustainability.html">Our Impact</a>
+            <a href="orders.html">My Orders</a>
+            <a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+        </nav>
+    </header>
+
+    <div class="section">
+        <h2>My orders</h2>
+        <div id="orders"></div>
+    </div>
+
+    <script src="cart.js"></script>
+    <script>
+        const steps = ["Placed", "Packed", "Shipped", "Delivered"];
+
+        async function load() {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                alert("Please log in to see your orders.");
+                window.location.href = "login.html";
+                return;
+            }
+
+            const response = await fetch("/api/orders", { headers: { "Authorization": "Bearer " + token } });
+            if (response.status === 401) {
+                alert("Please log in again.");
+                window.location.href = "login.html";
+                return;
+            }
+            const orders = await response.json();
+
+            if (orders.length === 0) {
+                document.getElementById("orders").innerHTML = '<p>No orders yet. <a href="catalogue.html">Shop renewed</a></p>';
+                return;
+            }
+
+            let html = "";
+            orders.forEach(o => {
+                let items = "";
+                o.items.forEach(i => items += '<li>' + i.name + ' x ' + i.quantity + ' - Rs ' + (i.price * i.quantity).toLocaleString() + '</li>');
+
+                let track = "";
+                if (o.status === "Cancelled") {
+                    track = '<p class="cancelled">This order was cancelled.</p>';
+                } else {
+                    const reached = steps.indexOf(o.status);
+                    track = '<div class="track">';
+                    steps.forEach((step, n) => track += '<span class="' + (n <= reached ? "done" : "") + '">' + step + '</span>');
+                    track += '</div>';
+                }
+
+                const cancel = o.status === "Placed" ? '<button class="btn" style="background:#b00020" onclick="cancelOrder(\'' + o._id + '\')">Cancel order</button>' : "";
+
+                html += '<div class="order">' +
+                    '<h3>Order ' + o.orderNumber + '</h3>' +
+                    '<small>Placed on ' + new Date(o.createdAt).toLocaleDateString() + '</small>' +
+                    track +
+                    '<ul class="list">' + items + '</ul>' +
+                    '<p><b>Total: Rs ' + o.total.toLocaleString() + '</b> (' + o.paymentMethod + ') - ' + o.trees + ' tree(s) planted</p>' +
+                    '<p>Deliver to: ' + o.name + ', ' + o.address + ', ' + o.phone + '</p>' +
+                    cancel + '</div>';
+            });
+            document.getElementById("orders").innerHTML = html;
+        }
+
+        async function cancelOrder(id) {
+            if (!confirm("Cancel this order?")) return;
+            const response = await fetch("/api/orders/" + id + "/cancel", {
+                method: "PUT",
+                headers: { "Authorization": "Bearer " + localStorage.getItem("token") }
+            });
+            const result = await response.json();
+            if (!response.ok) alert(result.message);
+            load();
+        }
+
+        load();
+    </script>
+</body>
+</html>

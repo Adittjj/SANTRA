@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Santra | Donate Your Clothes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="promo">Free doorstep pickup on donations of 3 garments or more - <a href="donate.html">book a collection</a></div>
+    <header>
+        <a href="index.html" class="logo">Santra</a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="catalogue.html">Catalogue</a>
+            <a href="donate.html">Donate Clothes</a>
+            <a href="sustainability.html">Our Impact</a>
+            <a href="orders.html">My Orders</a>
+            <a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+        </nav>
+    </header>
+    <div class="ticker">Together we've planted 1,284,506 trees</div>
+
+    <div class="hero">
+        <h1>Give us the clothes you stopped wearing</h1>
+        <p>Nothing you send is thrown away. Wearable pieces are mended and resold, the rest becomes fibre for the next collection, and a native tree goes into the ground in your name for every garment.</p>
+        <p>Free doorstep pickup on 3 garments or more | Rs 200 credit per garment (max Rs 3,000 a year) | Planting certificate with your name</p>
+    </div>
+
+    <div class="card" style="max-width:450px">
+        <h2>Book a pickup</h2>
+        <p>We collect between 9am and 7pm, seven days a week.</p>
+        <form onsubmit="donate(event)" style="text-align:left">
+            <label>Full name</label>
+            <input type="text" id="name">
+            <label>Phone</label>
+            <input type="text" id="phone">
+            <label>Pickup address</label>
+            <input type="text" id="address">
+            <label>City</label>
+            <select id="city">
+                <option value="">Choose a city</option>
+                <option>Pune</option>
+                <option>Mumbai</option>
+                <option>Bengaluru</option>
+                <option>Delhi NCR</option>
+                <option>Hyderabad</option>
+                <option>Kolkata</option>
+            </select>
+            <label>Preferred date</label>
+            <input type="date" id="date">
+            <label>How many garments?</label>
+            <input type="number" id="count" min="1" value="6" oninput="update()">
+            <p>That plants <b id="trees">6</b> trees and earns <b id="credit">Rs 1,200</b> in credit.</p>
+            <label>Name to print on the planting certificate</label>
+            <input type="text" id="certname">
+            <p class="error" id="error"></p>
+            <button type="submit" class="btn">Confirm pickup</button>
+        </form>
+        <p>Prefer to drop off? See the counters below.</p>
+    </div>
+
+    <div class="section left">
+        <h2>What you can send</h2>
+        <p style="text-align:center">Condition does not matter. Holes, stains and missing buttons all have a route through the mill.</p>
+        <div class="steps">
+            <div class="step"><h3>Send it over</h3><ul class="list">
+                <li>Shirts, kurtas, dresses, trousers, denim</li>
+                <li>Knitwear, coats, jackets, blazers</li>
+                <li>Saris, dupattas, bed linen, curtains, towels</li>
+                <li>Shoes and bags, even single shoes</li>
+                <li>Torn, stained, shrunk or faded anything</li>
+            </ul></div>
+            <div class="step"><h3>Please keep these back</h3><ul class="list">
+                <li>Wet or mould-damaged fabric</li>
+                <li>Items with oil, paint or chemicals</li>
+                <li>Medical or PPE textiles</li>
+                <li>Foam-filled mattresses and pillows</li>
+                <li>Anything you might miss in a month</li>
+            </ul></div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Where your bag goes</h2>
+        <div class="steps">
+            <div class="step"><span>Day 0</span><h3>Collected</h3><p>Our rider weighs the bag at your door and you get an SMS receipt.</p></div>
+            <div class="step"><span>Day 2</span><h3>Sorted by hand</h3><p>Sorters in Pune split the bag by fibre, colour and condition. About 38% can be resold as it is.</p></div>
+            <div class="step"><span>Day 9</span><h3>Repaired or shredded</h3><p>Wearable pieces are mended. The rest is re-spun and woven into new cloth.</p></div>
+            <div class="step"><span>Day 30</span><h3>Trees planted</h3><p>Your saplings go in at a restoration site and the certificate lands in your account.</p></div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Drop-off counters</h2>
+        <p>No appointment needed. Bring anything, in any bag.</p>
+        <table>
+            <tr><th>City</th><th>Counter</th><th>Open</th><th>Accepts</th></tr>
+            <tr><td>Pune</td><td>Koregaon Park, Lane 7</td><td>Mon-Sun, 10am-8pm</td><td>All textiles, footwear</td></tr>
+            <tr><td>Mumbai</td><td>Bandra West, Hill Road</td><td>Mon-Sat, 11am-9pm</td><td>All textiles, footwear</td></tr>
+            <tr><td>Bengaluru</td><td>Indiranagar, 12th Main</td><td>Mon-Sun, 10am-8pm</td><td>All textiles</td></tr>
+            <tr><td>Delhi NCR</td><td>Hauz Khas Village</td><td>Tue-Sun, 11am-7pm</td><td>All textiles, home linen</td></tr>
+            <tr><td>Hyderabad</td><td>Jubilee Hills, Road 36</td><td>Mon-Sat, 10am-7pm</td><td>All textiles</td></tr>
+        </table>
+    </div>
+
+    <div class="section left">
+        <h2>The more you send, the more grows</h2>
+        <div class="steps">
+            <div class="step"><h3>Sapling</h3><p>1-5 garments a year</p><ul class="list"><li>Rs 200 credit per garment</li><li>Digital certificate</li><li>Free drop-off</li></ul></div>
+            <div class="step"><h3>Grove</h3><p>6-15 garments a year</p><ul class="list"><li>Everything in Sapling</li><li>Free doorstep pickup</li><li>Named marker at the site</li><li>Early access to new pieces</li></ul></div>
+            <div class="step"><h3>Canopy</h3><p>16+ garments a year</p><ul class="list"><li>Everything in Grove</li><li>One free repair</li><li>Annual survival report</li><li>Planting weekend invite</li></ul></div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Questions we get asked</h2>
+        <div class="faq"><h3>Do I really get a tree for every single garment?</h3><p>Yes, counted per item and not per bag. A bag of nine shirts plants nine trees. Planting happens in batches at the start of each month.</p></div>
+        <div class="faq"><h3>Can I plant in someone else's name?</h3><p>You can. Put their name in the certificate field and we'll email the certificate to them with a note saying who donated.</p></div>
+        <div class="faq"><h3>What happens to fibres that can't be recycled?</h3><p>About 6% is blended synthetic our mill can't process. It goes to a cement kiln for energy recovery rather than landfill.</p></div>
+        <div class="faq"><h3>Is my credit transferable?</h3><p>Credit stays in your account for 24 months and can be sent to any other account by email. It can be spent on anything in the catalogue, including repairs.</p></div>
+    </div>
+
+    <script>
+        function update() {
+            const count = Number(document.getElementById("count").value) || 0;
+            document.getElementById("trees").textContent = count;
+            document.getElementById("credit").textContent = "Rs " + (count * 200).toLocaleString();
+        }
+
+        async function donate(event) {
+            event.preventDefault();
+            const form = event.target;
+            const data = {
+                name: document.getElementById("name").value.trim(),
+                phone: document.getElementById("phone").value.trim(),
+                address: document.getElementById("address").value.trim(),
+                city: document.getElementById("city").value,
+                date: document.getElementById("date").value,
+                count: Number(document.getElementById("count").value),
+                certName: document.getElementById("certname").value.trim()
+            };
+
+            if (!data.name || !data.phone || !data.address || !data.city || !data.date || data.count < 1) {
+                document.getElementById("error").textContent = "Please fill in everything.";
+                return;
+            }
+
+            try {
+                const response = await fetch("/api/donations", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + (localStorage.getItem("token") || "")
+                    },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+                if (!response.ok) {
+                    document.getElementById("error").textContent = result.message;
+                    return;
+                }
+                alert("Thanks " + data.name + "! Pickup booked for " + data.date + ". " + data.count + " tree(s) will be planted for you.");
+                form.reset();
+                document.getElementById("error").textContent = "";
+                update();
+            } catch (err) {
+                document.getElementById("error").textContent = "Cannot reach the server.";
+            }
+        }
+    </script>
+    <script src="cart.js"></script>
+</body>
+</html>

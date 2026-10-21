@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Santra - Register</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="promo">Free doorstep pickup on donations of 3 garments or more - <a href="donate.html">book a collection</a></div>
+    <header>
+        <a href="index.html" class="logo">Santra</a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="catalogue.html">Catalogue</a>
+            <a href="donate.html">Donate Clothes</a>
+            <a href="sustainability.html">Our Impact</a>
+            <a href="orders.html">My Orders</a>
+            <a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+        </nav>
+    </header>
+
+    <div class="card">
+        <h2>Create account</h2>
+        <form onsubmit="register(event)">
+            <label>Email</label>
+            <input type="text" id="email" placeholder="you@example.com">
+            <label>Password (8+ characters, upper, lower, number, symbol)</label>
+            <input type="password" id="password">
+            <label>Confirm password</label>
+            <input type="password" id="confirm">
+            <p class="error" id="error"></p>
+            <button type="submit" class="btn">Create account</button>
+        </form>
+        <p>Have an account? <a href="login.html">Login</a></p>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="cart.js"></script>
+</body>
+</html>

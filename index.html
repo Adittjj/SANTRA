@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Santra | Donate. Renew. Regrow.</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="promo">Free doorstep pickup on donations of 3 garments or more - <a href="donate.html">book a collection</a></div>
+    <header>
+        <a href="index.html" class="logo">Santra</a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="catalogue.html">Catalogue</a>
+            <a href="donate.html">Donate Clothes</a>
+            <a href="sustainability.html">Our Impact</a>
+            <a href="orders.html">My Orders</a>
+            <a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+        </nav>
+    </header>
+    <div class="ticker">Together we've planted 1,284,506 trees</div>
+
+    <div class="hero">
+        <h1>Your old clothes are somebody's new favourite</h1>
+        <p>Send us what you no longer wear. We repair it, re-spin it and remake it into the pieces in our catalogue - and for every single garment you donate, we plant a tree in your name.</p>
+        <a href="donate.html" class="btn">Donate clothes</a>
+        <a href="catalogue.html" class="btn" style="background:#004d4d">Shop renewed</a>
+        <p style="margin-top:20px;font-size:14px">Free pickup across 34 Indian cities | 1 garment = 1 tree</p>
+    </div>
+
+    <div class="section">
+        <h2>How the loop works</h2>
+        <p>Three steps, no cost to you, and a tree planted at the end of every one.</p>
+        <div class="steps">
+            <div class="step"><span>1</span><h3>You donate</h3><p>Book a free doorstep pickup or drop your bag at any Santra counter. Worn, torn or faded is fine.</p><a href="donate.html">Book a pickup</a></div>
+            <div class="step"><span>2</span><h3>We renew</h3><p>Wearable pieces are mended. The rest is re-spun into yarn and woven into new fabric at our mill in Panipat.</p><a href="sustainability.html">See the process</a></div>
+            <div class="step"><span>3</span><h3>A tree grows</h3><p>One garment, one native sapling, planted under your name with a photo and GPS pin sent within 30 days.</p><a href="sustainability.html">Count your trees</a></div>
+        </div>
+    </div>
+
+    <div class="band">
+        <div class="grid">
+            <div><div class="num">412,908</div>Garments donated</div>
+            <div><div class="num">1,284,506</div>Trees planted</div>
+            <div><div class="num">188 t</div>Textile waste diverted</div>
+            <div><div class="num">9</div>Planting sites in India</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Made from what you sent us</h2>
+        <div class="grid" id="products"></div>
+        <p><a href="catalogue.html">View full catalogue</a></p>
+    </div>
+
+    <div class="section left">
+        <h2>Every tree carries your name</h2>
+        <p>We don't plant into an anonymous forest. Each sapling is tagged to the person who donated the garment that paid for it. Sign in any time to see where your trees are standing.</p>
+        <ul class="list">
+            <li>Native species only - neem, jamun, mahua, arjun</li>
+            <li>Planted by farming families we pay a fixed wage</li>
+            <li>Survival audited at 12, 24 and 36 months</li>
+        </ul>
+        <p style="text-align:center"><a href="register.html" class="btn">Start your grove</a></p>
+        <div class="cert">
+            <small>PLANTING CERTIFICATE</small>
+            <p class="big">Aarav Mehta</p>
+            <p>7 trees - Satpura restoration site, Madhya Pradesh</p>
+            <p>Neem x 3, Jamun x 2, Arjun x 2</p>
+            <small>Planted 14 March 2026</small>
+        </div>
+    </div>
+
+    <div class="quote">
+        <p>"We stopped designing new clothes the day we realised the country already owns everything we need."</p>
+        <p>- JJ The Editor, Founder</p>
+    </div>
+
+    <div class="section">
+        <h2>UN Goal 12: Responsible Consumption &amp; Production</h2>
+        <p>India discards roughly a million tonnes of textiles a year. Santra's donation loop pulls garments back out of that stream, keeps the fibre in use, and puts a tree in the ground for each one we recover.</p>
+        <a href="sustainability.html">Read our full impact</a>
+    </div>
+
+    <script>
+        fetch("/api/products?limit=4")
+            .then(res => res.json())
+            .then(list => {
+                let html = "";
+                list.forEach(p => {
+                    html += '<div class="product"><div class="pic"><img src="' + (p.image || 'product.png') + '" alt="' + p.name + '" onerror="this.onerror=null;this.src=\'product.png\'"></div>' +
+                        '<h3>' + p.name + '</h3><p class="price">Rs ' + p.price.toLocaleString() + '</p><p>Plants ' + p.trees + ' tree(s)</p>' +
+                        '<span class="tag">' + p.method + '</span><p></p></div>';
+                });
+                document.getElementById("products").innerHTML = html;
+            });
+    </script>
+    <script src="cart.js"></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Santra | Our Impact</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="promo">Free doorstep pickup on donations of 3 garments or more - <a href="donate.html">book a collection</a></div>
+    <header>
+        <a href="index.html" class="logo">Santra</a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="catalogue.html">Catalogue</a>
+            <a href="donate.html">Donate Clothes</a>
+            <a href="sustainability.html">Our Impact</a>
+            <a href="orders.html">My Orders</a>
+            <a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+        </nav>
+    </header>
+    <div class="ticker">Together we've planted 1,284,506 trees</div>
+
+    <div class="hero">
+        <h1>We don't make clothes. We give them back.</h1>
+        <p>Santra runs on donated fabric. Every kilogram of cloth in our catalogue was worn by someone else first, and every garment recovered puts a native tree in the ground under the donor's name.</p>
+        <p>UN SDG 12 | 1 garment = 1 tree</p>
+    </div>
+
+    <div class="band">
+        <h2 style="margin-top:0">This year so far</h2>
+        <div class="grid">
+            <div><div class="num">412,908</div>Garments taken back</div>
+            <div><div class="num">1,284,506</div>Trees planted, all named</div>
+            <div><div class="num">94%</div>Kept out of landfill</div>
+            <div><div class="num">0</div>Virgin fibre bought since 2023</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Count what your wardrobe could do</h2>
+        <p>Slide to the number of garments sitting unworn in your cupboard.</p>
+        <div class="calc">
+            <p>Garments you could donate: <b id="num">12</b></p>
+            <input type="range" id="slider" min="1" max="50" value="12" oninput="calculate()">
+            <p>Trees planted: <b id="trees"></b></p>
+            <p>Water saved: <b id="water"></b></p>
+            <p>CO2 avoided: <b id="co2"></b></p>
+            <p>Waste diverted: <b id="waste"></b></p>
+            <small>Based on 2,650 L water and 9 kg CO2 per garment, at 600 g average weight.</small>
+            <p><a href="donate.html" class="btn">Book a pickup</a></p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Four things we do with your clothes</h2>
+        <div class="steps">
+            <div class="step"><h3>Repair first</h3><p>38% of what arrives only needs a seam, a zip or a wash. Repair beats recycling, so it is always the first option.</p></div>
+            <div class="step"><h3>Mechanical recycling</h3><p>The rest is shredded and re-spun without chemical solvents. No virgin cotton since 2023.</p></div>
+        </div>
+        <div class="steps">
+            <div class="step"><h3>Plastic-free returns</h3><p>Bags, mailers and tags are paper or cassava starch. The bag your order arrives in comes back with your next donation.</p></div>
+            <div class="step"><h3>Named planting</h3><p>Every garment funds one native sapling, tagged to its donor and audited at 12, 24 and 36 months.</p></div>
+        </div>
+    </div>
+
+    <div class="section left">
+        <h2>Where the trees actually go</h2>
+        <p style="text-align:center">Nine restoration sites, all named, all visitable. We publish survival rates per site.</p>
+        <div class="steps">
+            <div class="step"><h3>Satpura, MP</h3><p>418,000 trees - neem, jamun, arjun<br>91% survival at 24 months</p></div>
+            <div class="step"><h3>Western Ghats, MH</h3><p>306,200 trees - jamun, mahua, hirda<br>88% survival at 24 months</p></div>
+        </div>
+        <div class="steps">
+            <div class="step"><h3>Sundarbans, WB</h3><p>274,900 mangroves - sundari, garjan<br>79% survival at 24 months</p></div>
+            <div class="step"><h3>Aravalli, RJ</h3><p>285,400 trees - khejri, rohida<br>83% survival at 24 months</p></div>
+        </div>
+        <p>Our fibre work happens at three partner mills: Panipat (shredding and re-spinning), Ludhiana (knitwear) and Bhiwandi (silk and blends). All are audited yearly for wages and effluent.</p>
+    </div>
+
+    <div class="section">
+        <h2>Independently checked</h2>
+        <p>GOTS certified fibre | OEKO-TEX Standard 100 | Fair wage audited | Carbon neutral logistics</p>
+    </div>
+
+    <div class="section left">
+        <h2>Our 2030 commitments</h2>
+        <p>5 million trees planted in donors' names - 26%</p><div class="bar"><div style="width:26%"></div></div>
+        <p>1 million garments recovered a year - 41%</p><div class="bar"><div style="width:41%"></div></div>
+        <p>Zero donated material sent to landfill - 94%</p><div class="bar"><div style="width:94%"></div></div>
+        <p>Drop-off counters in 50 cities - 68%</p><div class="bar"><div style="width:68%"></div></div>
+        <p>Living wage across every partner mill - 77%</p><div class="bar"><div style="width:77%"></div></div>
+    </div>
+
+    <div class="section left">
+        <h2>How we got here</h2>
+        <p><b>2018</b> - Santra opens as a small clothing label in Pune, buying conventional cotton like everyone else.</p>
+        <p><b>2021</b> - First take-back bin at the Pune store. 1,900 garments come back in four months and the mill idea starts.</p>
+        <p><b>2023</b> - We stop buying virgin fibre entirely. Every new piece is made from donated material.</p>
+        <p><b>2024</b> - One tree per garment becomes a standing promise, with donor names on every sapling.</p>
+        <p><b>2026</b> - 1.28 million trees standing, 34 cities served, and doorstep pickup made free for everyone.</p>
+        <p><b>2030</b> - The target: five million named trees and a million garments recovered every year.</p>
+    </div>
+
+    <div class="quote">
+        <h3>Read the full numbers</h3>
+        <p>Our impact report lists every mill, every planting site and everything we got wrong last year.</p>
+        <a href="donate.html" class="btn">Donate clothes</a>
+    </div>
+
+    <script>
+        function calculate() {
+            const n = Number(document.getElementById("slider").value);
+            document.getElementById("num").textContent = n;
+            document.getElementById("trees").textContent = n;
+            document.getElementById("water").textContent = (n * 2650).toLocaleString() + " L";
+            document.getElementById("co2").textContent = (n * 9) + " kg";
+            document.getElementById("waste").textContent = (n * 0.6).toFixed(1) + " kg";
+        }
+        calculate();
+    </script>
+    <script src="cart.js"></script>
+</body>
+</html>

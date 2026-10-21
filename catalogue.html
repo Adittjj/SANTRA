@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Santra | The Renewed Catalogue</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="promo">Free doorstep pickup on donations of 3 garments or more - <a href="donate.html">book a collection</a></div>
+    <header>
+        <a href="index.html" class="logo">Santra</a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="catalogue.html">Catalogue</a>
+            <a href="donate.html">Donate Clothes</a>
+            <a href="sustainability.html">Our Impact</a>
+            <a href="orders.html">My Orders</a>
+            <a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+        </nav>
+    </header>
+    <div class="ticker">Together we've planted 1,284,506 trees</div>
+
+    <div class="hero" style="padding:50px 20px">
+        <h1>The Renewed Catalogue</h1>
+        <p>Every piece here began as something someone posted back to us. Nothing is made from virgin fabric.</p>
+        <p><b>248</b> pieces in stock | <b>100%</b> donated fibre | <b>1 tree</b> per garment recovered</p>
+    </div>
+
+    <div class="section">
+        <div class="filters" id="filters"></div>
+        <p id="count"></p>
+        <div class="grid" id="products"></div>
+    </div>
+
+    <div class="section">
+        <h2>What each renewal method means</h2>
+        <table>
+            <tr><th>Method</th><th>What happens</th><th>Fibre recovered</th><th>Trees</th><th>Warranty</th></tr>
+            <tr><td>Remade</td><td>Shredded to fibre, re-spun, rewoven into new cloth</td><td>92%</td><td>2-6</td><td>3 years</td></tr>
+            <tr><td>Repaired</td><td>Cleaned, restitched, resoled and sold as it is</td><td>100%</td><td>1</td><td>2 years</td></tr>
+            <tr><td>Overdyed</td><td>Stained or faded pieces redyed with plant dyes</td><td>100%</td><td>1</td><td>2 years</td></tr>
+            <tr><td>Patchwork</td><td>Offcuts pieced into one-of-one garments</td><td>88%</td><td>1-2</td><td>3 years</td></tr>
+        </table>
+    </div>
+
+    <div class="quote">
+        <h3>Donate, don't just shop</h3>
+        <p>Send us three garments and we'll credit Rs 600 to your account - plus three trees in your name.</p>
+        <a href="donate.html" class="btn">Book a pickup</a>
+    </div>
+
+    <script>
+        // name, category, method, price, old price, trees, detail
+        let items = [];
+        const categories = ["All", "Coats", "Knitwear", "Shirts", "Trousers", "Dresses", "Footwear", "Accessories"];
+
+        function show(category) {
+            let html = "";
+            let count = 0;
+            items.forEach(i => {
+                if (category === "All" || i[1] === category) {
+                    count++;
+                    html += '<div class="product"><div class="pic"><img src="' + (i[8] || 'product.png') + '" alt="' + i[0] + '" onerror="this.onerror=null;this.src=\'product.png\'"></div>' +
+                        '<h3>' + i[0] + '</h3><span class="tag">' + i[2] + '</span><p>' + i[6] + '</p>' +
+                        '<p class="price">Rs ' + i[3].toLocaleString() + ' <s style="color:#999;font-weight:normal">Rs ' + i[4].toLocaleString() + '</s></p>' +
+                        '<p>Plants ' + i[5] + ' tree(s)</p>' +
+                        '<button class="btn" style="margin-bottom:8px" onclick="addItem(\'' + i[7] + '\', false, this)">Add to cart</button><br>' +
+                        '<button class="btn" style="margin-bottom:14px; background:#004d4d" onclick="addItem(\'' + i[7] + '\', true, this)">Buy now</button></div>';
+                }
+            });
+            document.getElementById("products").innerHTML = html;
+            document.getElementById("count").innerHTML = "Showing <b>" + count + "</b> of 248 pieces";
+            document.querySelectorAll(".filters button").forEach(b => {
+                b.classList.toggle("active", b.textContent === category);
+            });
+        }
+
+        let buttons = "";
+        categories.forEach(c => buttons += '<button onclick="show(\'' + c + '\')">' + c + '</button>');
+        document.getElementById("filters").innerHTML = buttons;
+        function addItem(id, goToCart, button) {
+            const i = items.find(item => item[7] === id);
+            addToCart({ id: i[7], name: i[0], price: i[3], trees: i[5] });
+            if (goToCart) {
+                window.location.href = "cart.html";
+                return;
+            }
+            button.textContent = "Added!";
+            setTimeout(() => button.textContent = "Add to cart", 1000);
+        }
+
+        fetch("/api/products")
+            .then(res => res.json())
+            .then(list => {
+                items = list.map(p => [p.name, p.category, p.method, p.price, p.oldPrice, p.trees, p.detail, p._id, p.image]);
+                show("All");
+            })
+            .catch(() => document.getElementById("count").textContent = "Could not load products.");
+    </script>
+    <script src="cart.js"></script>
+</body>
+</html>

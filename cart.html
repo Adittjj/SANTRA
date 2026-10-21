@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Santra | Your Cart</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="promo">Free doorstep pickup on donations of 3 garments or more - <a href="donate.html">book a collection</a></div>
+    <header>
+        <a href="index.html" class="logo">Santra</a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="catalogue.html">Catalogue</a>
+            <a href="donate.html">Donate Clothes</a>
+            <a href="sustainability.html">Our Impact</a>
+            <a href="orders.html">My Orders</a>
+            <a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+        </nav>
+    </header>
+
+    <div class="section">
+        <h2>Your cart</h2>
+        <div id="cartBox"></div>
+    </div>
+
+    <div class="card" id="checkout" style="max-width:450px; display:none">
+        <h2>Delivery details</h2>
+        <form onsubmit="placeOrder(event)" style="text-align:left">
+            <label>Full name</label>
+            <input type="text" id="name">
+            <label>Phone</label>
+            <input type="text" id="phone">
+            <label>Delivery address</label>
+            <input type="text" id="address">
+            <p>Payment: Cash on delivery</p>
+            <p class="error" id="error"></p>
+            <button type="submit" class="btn">Place order</button>
+        </form>
+    </div>
+
+    <script src="cart.js"></script>
+    <script>
+        function render() {
+            const cart = getCart();
+            const box = document.getElementById("cartBox");
+
+            if (cart.length === 0) {
+                box.innerHTML = '<p>Your cart is empty. <a href="catalogue.html">Shop renewed</a></p>';
+                document.getElementById("checkout").style.display = "none";
+                return;
+            }
+
+            let rows = "";
+            let total = 0;
+            let trees = 0;
+            cart.forEach((item, index) => {
+                total += item.price * item.quantity;
+                trees += item.trees * item.quantity;
+                rows += '<tr><td>' + item.name + '</td>' +
+                    '<td>Rs ' + item.price.toLocaleString() + '</td>' +
+                    '<td><button onclick="change(' + index + ', -1)">-</button> ' + item.quantity + ' <button onclick="change(' + index + ', 1)">+</button></td>' +
+                    '<td>Rs ' + (item.price * item.quantity).toLocaleString() + '</td>' +
+                    '<td><button onclick="removeItem(' + index + ')">Remove</button></td></tr>';
+            });
+
+            box.innerHTML = '<table><tr><th>Item</th><th>Price</th><th>Quantity</th><th>Subtotal</th><th></th></tr>' + rows + '</table>' +
+                '<p class="result">Total: Rs ' + total.toLocaleString() + '</p>' +
+                '<p>This order plants ' + trees + ' tree(s).</p>';
+            document.getElementById("checkout").style.display = "block";
+        }
+
+        function change(index, amount) {
+            const cart = getCart();
+            cart[index].quantity += amount;
+            if (cart[index].quantity < 1) cart.splice(index, 1);
+            if (cart[index] && cart[index].quantity > 10) cart[index].quantity = 10;
+            saveCart(cart);
+            render();
+        }
+
+        function removeItem(index) {
+            const cart = getCart();
+            cart.splice(index, 1);
+            saveCart(cart);
+            render();
+        }
+
+        async function placeOrder(event) {
+            event.preventDefault();
+            const token = localStorage.getItem("token");
+            if (!token) {
+                alert("Please log in to place your order.");
+                window.location.href = "login.html";
+                return;
+            }
+
+            const data = {
+                items: getCart().map(item => ({ productId: item.id, quantity: item.quantity })),
+                name: document.getElementById("name").value.trim(),
+                phone: document.getElementById("phone").value.trim(),
+                address: document.getElementById("address").value.trim()
+            };
+            if (!data.name || !data.phone || !data.address) {
+                document.getElementById("error").textContent = "Please fill in everything.";
+                return;
+            }
+
+            try {
+                const response = await fetch("/api/orders", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+                if (response.status === 401) {
+                    alert("Please log in again.");
+                    window.location.href = "login.html";
+                    return;
+                }
+                if (!response.ok) {
+                    document.getElementById("error").textContent = result.message;
+                    return;
+                }
+                saveCart([]);
+                alert("Order placed! Your order number is " + result.orderNumber + ".");
+                window.location.href = "orders.html";
+            } catch (err) {
+                document.getElementById("error").textContent = "Cannot reach the server.";
+            }
+        }
+
+        render();
+    </script>
+</body>
+</html>
